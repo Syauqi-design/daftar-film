@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('films.update', $film) }}" method="POST" class="space-y-4">
+    <form action="{{ route('films.update', $film) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
         <div>
@@ -33,6 +33,18 @@
             <label class="block">Deskripsi</label>
             <textarea name="deskripsi" class="w-full border px-3 py-2 rounded" required>{{ $film->deskripsi }}</textarea>
         </div>
+        <div>
+            <label class="block mb-1">Poster Baru (opsional)</label>
+            <input type="file" name="poster" class="border rounded px-2 py-1 w-full">
+        </div>
+
+        @if($film->poster)
+            <div>
+                <p class="text-sm text-gray-600 mb-1">Poster Saat Ini:</p>
+                <img src="{{ asset('storage/' . $film->poster) }}" alt="Poster {{ $film->judul }}" class="w-32 h-auto rounded shadow">
+            </div>
+        @endif
+
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Perbarui</button>
         <a href="{{ route('films.index') }}" class="ml-2 text-gray-600">Batal</a>
     </form>
